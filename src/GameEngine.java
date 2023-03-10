@@ -26,10 +26,35 @@ public class GameEngine {
      */
     public void simulateBattle(Fighter first, Fighter second) {
 
+        /*
+     If both fighters compute the same attack score, the round results in a draw.
+     Otherwise, the fighter with the higher attack score hits the fighter with the lower attack score,
+     whose stamina is reduced by two (or set to zero if it is currently set to one).
+    * */
+
         log("At start of battle, stats are:");
         log(first.toString());
         log(second.toString());
         log("------------------------------");
+
+        while (!first.isDead() && !second.isDead()) {
+            int firstAttackScore = first.calculateAttackScore();
+            int secondAttackScore = second.calculateAttackScore();
+
+            if (firstAttackScore == secondAttackScore) {
+                log(first.getName() + " draws with " + second.getName());
+            } else if (firstAttackScore > secondAttackScore) {
+                second.takeDamage(first.calculateDamage());
+                log(first.getName() + " hits " + second.getName());
+            } else {
+                // secondAttackScore > firstAttackScore
+            }
+
+            // Check if anyone is dead and if so - end the game
+            // You can end the game by logging a message then having 'return;' on the line below
+
+        }
+
 
 
 

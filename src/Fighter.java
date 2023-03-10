@@ -1,24 +1,22 @@
 public class Fighter {
 
     // Field Declarations
-    // TODO:  Put the correct specifiers for each declaration.
+    private final String name;
 
-    final String name;
+    private final String type;
 
-    final String type;
+    private final int skill;
 
-    final int skill;
+    private int stamina;
 
-    int stamina;
+    private final GameEngine theGameEngine;
 
-    final GameEngine theGameEngine;
-
-    static final int DAMAGE_VALUE = 2;
+    public static final int DAMAGE_VALUE = 2;
 
     /**
      * Construct a figher, given a name, type, attributes and reference to the game engine.
      */
-    Fighter(String name, String type, int skill, int stamina, GameEngine theGameEngine) {
+    public Fighter(String name, String type, int skill, int stamina, GameEngine theGameEngine) {
 
         this.name = name;
         this.type = type;
@@ -29,22 +27,18 @@ public class Fighter {
     }
 
     // TODO:  Reduce the fighter's stamina accordingly
-    public void takeDamage(int damage) {}
+    public void takeDamage(int damage) {
+        stamina = Math.max(stamina - damage, 0);
+    }
 
     // TODO:  Return the number of damage points to be inflicted on opponent
     public int calculateDamage() {
-        return 0;
+        return DAMAGE_VALUE;
     }
 
     // TODO: Calculate an attack score for the fighter using the procedure:
-    /*
-    This is obtained by rolling two dice, and adding the result to the fighter's skill.
-     If both fighters compute the same attack score, the round results in a draw.
-     Otherwise, the fighter with the higher attack score hits the fighter with the lower attack score,
-     whose stamina is reduced by two (or set to zero if it is currently set to one).
-    * */
     public int calculateAttackScore() {
-        return 0;
+        return skill + theGameEngine.rollDice() + theGameEngine.rollDice();
     }
 
     public String getName() {
@@ -52,6 +46,7 @@ public class Fighter {
     }
     // TODO: Answer this question.
     // Why don't we need more getters?
+    // Because the GameEngine does not  need to get any of the other attributes.
 
     public String toString() {
         return name + " - " + type + " - skill: " + skill + "; stamina: " + stamina;
@@ -62,4 +57,7 @@ public class Fighter {
     }
     // TODO: Answer this question.
     // Why not simply have a boolean that specifies whether the fighter is dead or not?
+    // When the game engine is using the fighter object they won't have to change any field
+    // of the fighter object. Calling this method instead is saving space and using
+    // the fields we already have, similar to not having a bottom field.
 }
